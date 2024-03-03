@@ -102,7 +102,7 @@ module plate() {
 
 
 pattern_sequencer_width =
-    3 * pad_medium_width + 14 + 3.5;
+    3 * pad_medium_width + 14 + 3;
 module pattern_sequencer() {
     position_0 = 0;
     translate([position_0, 0, 0])
@@ -112,25 +112,25 @@ module pattern_sequencer() {
     translate([position_1, 0, 0])
         pad_m();
    
-    position_2 = position_1 + pad_medium_width + 3.5;
+    position_2 = position_1 + pad_medium_width + 3;
     translate([position_2, 0, 0])
         pad_m();
 }
 
 sample_edit_width = 
-    2 * pad_medium_width + 3.5;
+    2 * pad_medium_width + 3;
 module sample_edit() {
     position_0 = 0;
     translate([position_0, 0, 0])
         pad_m();
    
-    position_1 = position_0 + pad_medium_width + 3.5;
+    position_1 = position_0 + pad_medium_width + 3;
     translate([position_1, 0, 0])
         pad_m();
 }
 
 row_03_width =
-    pattern_sequencer_width + 7.5 +
+    pattern_sequencer_width + 7 +
     sample_edit_width + 13 +
     circle_tempo_diameter;
 row_03_depth_excluding_tempo = pad_medium_depth;
@@ -141,7 +141,7 @@ module row_03() {
         translate([position_0, 0, 0])
             pattern_sequencer();
         
-        position_1 = position_0 + pattern_sequencer_width + 7.5;
+        position_1 = position_0 + pattern_sequencer_width + 7;
         translate([position_1, 0, 0])
             sample_edit();
         
@@ -151,36 +151,56 @@ module row_03() {
     }
 };
 
+sampling_width =
+    2 * (pad_medium_width + 3.5) + pad_small_width;
 module sampling() {
     position_0 = 0;
     translate([position_0, 0, 0])
         pad_m();
    
-    position_1 = position_0 + pad_medium_width + 3.5;
+    position_1 = position_0 + pad_medium_width + 3;
     translate([position_1, 0, 0])
+        pad_m();
+    
+    position_2 = position_1 + pad_medium_width + 3;
+    translate([position_2, 0, 0])
+        pad_s();
+}
+
+sample_mode_width =
+    2 * pad_extra_small_width +
+    3 * pad_medium_width +
+    4 * 3;
+module sample_mode() {
+    pad_xs();
+    
+    position_1 = pad_extra_small_width + 3;
+    translate([position_1, 0, 0])
+        pad_xs();
+    
+    position_2 = position_1 + pad_extra_small_width + 3 + 3;
+    translate([position_2, 0, 0])
+        pad_m();
+   
+    position_3 = position_2 + pad_medium_width + 3;
+    translate([position_3, 0, 0])
+        pad_m();
+    
+    position_4 = position_3 + pad_medium_width + 3;
+    translate([position_4, 0, 0])
         pad_m();
 }
 
 row_04_width =
-    0;
+    sampling_width + 3 + sample_mode_width ;
 row_04_depth =
     pad_medium_depth;
 
 module row_04() {
-    translate([(pad_medium_width / 2 -row_04_width) / 2, 0, 0]) {
-        // sampling
-        pad_m();
-        translate([14 + 14, 0, 0])
-            pad_m();
-        translate([13 + 14 + 3.5 + 14, 0, 0])
-            pad_s();
-        // sample mode
-        translate([13 + 14 + 3.5 + 14 + 7.5 + 14, 0, 0])
-            pad_m();
-        translate([13 + 14 + 3.5 + 14 + 7.5 + 14 + 3.5 + 14, 0, 0])
-            pad_m();
-        translate([13 + 14 + 3.5 + 14 + 7.5 + 14 + 3.5 + 14 + 13 + 17/2, 0, 0])
-            pad_s();
+    translate([(pad_medium_width / 2 - row_04_width) / 2, 0, 0]) {
+        sampling();
+        translate([sampling_width + 3, 0, 0])
+            sample_mode();
     }
 }
 
